@@ -1,0 +1,653 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NativeUI</name>
+    </assembly>
+    <members>
+        <member name="T:NativeUI.AnimationHelper">
+            <summary>
+            Helper class for GIFs.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UIMenu">
+            <summary>
+            Create a new instance of this class in order to create a menu.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UIMenu.Options">
+            <summary>
+            Options for all menus
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.disablePlayerMovementWhenMenuIsOpened">
+            <summary>
+            This will disable the movement of the player when the menu is opened and re-enables it when the menu closes.
+            <para>It will also disable the phone.</para>
+            <para>WARNING: If the player drives a vehicle, the vehicle WILL stop instantly!</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.disablePhoneWhenMenuIsOpened">
+            <summary>
+            Disables the phone when the menu is opened and re-enables it when the menu closes.
+            <para>This allows you to use the following keys: UP, DOWN, LEFT, RIGHT and ENTER</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.enableControllerSupport">
+            <summary>
+            This enables the support for navigating through the menu with a controller.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.enableMenuSounds">
+            <summary>
+            This will enable or disable all menu sounds.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.AnimatedBannerFrameRate">
+            <summary>
+            Gets or sets the animated banner frame rate.
+            <para>If set to zero, 120 will be used instead.</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.UpKey">
+            <summary>
+            Key for navigating up in the menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.DownKey">
+            <summary>
+            Key for navigating down in the menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.LeftKey">
+            <summary>
+            Key for navigating left in the menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.RightKey">
+            <summary>
+            Key for navigating right in the menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.Options.AcceptKey">
+            <summary>
+            Key to confirm the selection in the menu.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UIMenu.currentlyOpenedMenu">
+            <summary>
+            This stores the currently opened menu in it.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UIMenu.allMenus">
+            <summary>
+            A collection of all menus.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UIMenu.Show(NativeUI.UIMenu)">
+            <summary>
+            Starts drawing the menu on screen.
+            </summary>
+            <param name="targetMenu">The menu that you want to be drawn</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.Hide(NativeUI.UIMenu)">
+            <summary>
+            Stops drawing the menu on screen.
+            </summary>
+            <param name="targetMenu">The menu that you want to hide</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.HideAllMenus">
+            <summary>
+            Hides all of your menus.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UIMenu.IsAnyMenuOpen">
+            <summary>
+            Checks if any menu is opened right now.
+            </summary>
+            <returns>Returns true if there is a menu opened, otherwise false.</returns>
+        </member>
+        <member name="M:NativeUI.UIMenu.ProcessDrawing(GTA.GraphicsEventArgs)">
+            <summary>
+            This method needs to be called everytime from your PerFrameDrawing method in order for the menu to be drawn.
+            </summary>
+            <param name="args">The GraphicsEventArgs from your PerFrameDrawing method.</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.ProcessKeyPress(GTA.KeyEventArgs)">
+            <summary>
+            This method needs to be called everytime you press a key from your KeyDown method in order for the menu to work.
+            </summary>
+            <param name="args">The GTA.KeyEventArgs from your KeyDown method.</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.ProcessController">
+            <summary>
+            This method needs to be called everytime from your Tick method in order for the controller navigation to work.
+            <para>Note: The higher your Tick interval, the higher the input lag from your controller is.</para>
+            </summary>
+        </member>
+        <member name="E:NativeUI.UIMenu.OnSelectedIndexChanged">
+            <summary>
+            Raises when the selected index of this menu changes.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UIMenu.menuItems">
+            <summary>
+            A collection of all items currently available in this menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.menuTitle">
+            <summary>
+            The title of the menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.menuDescription">
+            <summary>
+            The description of the menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.isMenuOpened">
+            <summary>
+            Gets the visibility state of this menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.selectedIndex">
+            <summary>
+            Gets the currently selected item index of this menu.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UIMenu.MaxItemsVisibleAtOnce">
+            <summary>
+            Gets or sets how much items the menu can display at once. (Default value: 6)
+            <para>- This setting doesn't work yet -</para>
+            </summary>
+        </member>
+        <member name="M:NativeUI.UIMenu.#ctor(System.String,System.String)">
+            <summary>
+            Constructor of the Menu class.
+            </summary>
+            <param name="title">The title of the menu.</param>
+            <param name="description">The description of the menu. (Text under the image)</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.#ctor(System.String,System.String,GTA.Texture)">
+            <summary>
+            Constructor of the Menu class.
+            </summary>
+            <param name="title">The title of the menu.</param>
+            <param name="description">The description of the menu (Text under the image).</param>
+            <param name="image">The menu image. Not GIF friendly. Only static images. Recommended size: 432x97.</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.#ctor(System.String,System.String,System.Drawing.Image)">
+            <summary>
+            Constructor of the Menu class.
+            </summary>
+            <param name="title">The title of the menu.</param>
+            <param name="description">The description of the menu (Text under the image).</param>
+            <param name="image">The menu image. Supports GIFs. Recommended size: 432x97.</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.AddItem(NativeUI.UI.BaseElement)">
+            <summary>
+            Add an item to the menu.
+            </summary>
+            <param name="item">Adds the item to the menu</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.AddItems(NativeUI.UI.BaseElement[])">
+            <summary>
+            Adds an array of items to the menu.
+            </summary>
+            <param name="items">The array with items</param>
+        </member>
+        <member name="M:NativeUI.UIMenu.RemoveItem(NativeUI.UI.BaseElement)">
+            <summary>
+            This removes the specific item from the list.
+            </summary>
+            <param name="item">The item to be removed</param>
+            <returns>Returns true if the item was deleted, otherwise false.</returns>
+        </member>
+        <member name="M:NativeUI.UIMenu.RemoveItem(System.Int32)">
+            <summary>
+            This removes the specific item from the list through it's index.
+            </summary>
+            <param name="index">The index where the item is at</param>
+            <returns>Returns true if the item was deleted, otherwise false.</returns>
+        </member>
+        <member name="M:NativeUI.UIMenu.RemoveAllItems">
+            <summary>
+            This removes all items from the menu.
+            </summary>
+        </member>
+        <member name="T:NativeUI.NativeUIEventHandler">
+            <summary>
+            For internal use only.
+            </summary>
+        </member>
+        <member name="T:NativeUI.Properties.Resources">
+            <summary>
+              Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.ResourceManager">
+            <summary>
+              Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.Culture">
+            <summary>
+              Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+              Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.ArrowLeft">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.ArrowRight">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.ArrowsUpDown">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.CheckboxCheckedDisabled">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.CheckboxCheckedSelected">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.CheckboxCheckedUnselected">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.CheckboxUncheckedDisabled">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.CheckboxUncheckedSelected">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.CheckboxUncheckedUnselected">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="P:NativeUI.Properties.Resources.MenuImage">
+            <summary>
+              Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI">
+            <summary>
+            All menu items.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI.ControlType">
+            <summary>
+            All control types.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UI.ControlType.Default">
+            <summary>
+            Default control type (This is used by the BaseElement)
+            </summary>
+        </member>
+        <member name="F:NativeUI.UI.ControlType.UIMenuItem">
+            <summary>
+            UIMenuItem: Normal item with just text.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UI.ControlType.UIMenuCheckboxItem">
+            <summary>
+            UIMenuCheckboxItem: Item with text and a checkbox.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UI.ControlType.UIMenuListItem">
+            <summary>
+            UIMenuListItem: Item with text and a listbox with items in it.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI.BaseElement">
+            <summary>
+            Base class for all UI Elements.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.Name">
+            <summary>
+            The name of the element.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.Text">
+            <summary>
+            The text of the element.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.Description">
+            <summary>
+            The description for that element.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.Tag">
+            <summary>
+            The tag of the element.
+            This is used to store informations in it.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.IsEnabled">
+            <summary>
+            Gets or sets if the element is enabled or not.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.IsSelected">
+            <summary>
+            Gets if the current item is selected or not.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.defaultItemBackColor">
+            <summary>
+            The backcolor of the non-selected item. (Default ARGB: A:170, R:10, G:10, B:10)
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.defaultItemTextColor">
+            <summary>
+            The textcolor of the non-selected item. (Default ARGB: A:255, R:255, G:255, B:255)
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.selectedItemBackColor">
+            <summary>
+            The backcolor of the selected item. (Default ARGB: A:255, R:245, G:245, B:245)
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.selectedItemTextColor">
+            <summary>
+            The textcolor of the selected item. (Default ARGB: A:255, R:5, G:5, B:5)
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.disabledItemTextColor">
+            <summary>
+            The textcolor of the disabled item. (Default ARGB: A:255, R:150, G:150, B:150)
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.BaseElement.Type">
+            <summary>
+            The type of the item.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI.UIMenuItem">
+            <summary>
+            Default menu item with only text.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI.UIMenuItem.iconLocations">
+            <summary>
+            Icon locations.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UI.UIMenuItem.iconLocations.Left">
+            <summary>
+            Icon will be placed on the left side.
+            </summary>
+        </member>
+        <member name="F:NativeUI.UI.UIMenuItem.iconLocations.Right">
+            <summary>
+            Icon will be placed on the right side.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuItem.#ctor(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Creates a new menu item with the default colors.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuItem.#ctor(System.String,System.String,System.String,System.Boolean,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            Creates a new menu item with custom colors.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+            <param name="_defaultItemBackColor">The backcolor of the non-selected item. (Default ARGB: A:170, R:10, G:10, B:10)</param>
+            <param name="_defaultItemTextColor">The textcolor of the non-selected item. (Default ARGB: A:255, R:255, G:255, B:255)</param>
+            <param name="_selectedItemBackColor">The backcolor of the selected item. (Default ARGB: A:255, R:245, G:245, B:245)</param>
+            <param name="_selectedItemTextColor">The textcolor of the selected item. (Default ARGB: A:255, R:5, G:5, B:5)</param>
+            <param name="_disabledItemTextColor">The textcolor of the disabled item. (Default ARGB: A:255, R:150, G:150, B:150)</param>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.DrawIcon">
+            <summary>
+            Gets or sets if the selected icon should be displayed.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.DefaultIcon">
+            <summary>
+            The default icon for this item. (When the item is unselected)
+            <para>Maximum icon size: 32x32.</para>
+            <para>Note: If the size of the icon is less then 32x32, then you need to manually adjust the offset.</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.SelectedIcon">
+            <summary>
+            The selected icon for this item. (When the item is selected)
+            <para>Maximum icon size: 32x32.</para>
+            <para>Note: If the size of the icon is less then 32x32, then you need to manually adjust the offset.</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.DisabledIcon">
+            <summary>
+            The disabled icon for this item. (When the item is disabled)
+            <para>Maximum icon size: 32x32.</para>
+            <para>Note: If the size of the icon is less then 32x32, then you need to manually adjust the offset.</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.IconSize">
+            <summary>
+            The size of your icon(s).
+            <para>Maximum icon size: 32x32.</para>
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.IconLocation">
+            <summary>
+            The location of the icon. (Default location: Left)
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuItem.NestedMenu">
+            <summary>
+            Gets or sets the nested menu for this item.
+            <para>If the user clicks on this item, the nested menu will be displayed.</para>
+            <para>The nested menu will not display if this item is disabled.</para>
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuItem.IconOffset(System.Single,System.Single)">
+            <summary>
+            Shifts the X and Y coordinates of the icon by specified values.
+            </summary>
+            <param name="X">The amount to offset the icon's X coordinate.</param>
+            <param name="Y">The amount to offset the icon's Y coordinate.</param>
+        </member>
+        <member name="E:NativeUI.UI.UIMenuItem.OnClick">
+            <summary>
+            Raises when the user clicks on this item. It doesn't raise when the item is not enabled.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuItem.PerformClick">
+            <summary>
+            Generates a OnClick event.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI.UIMenuCheckboxItem">
+            <summary>
+            Default menu item with text and a checkbox.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuCheckboxItem.#ctor(System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new checkbox item with the default colors.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+            <param name="_isChecked">Sets if the checkbox should be checked from the beginning.</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuCheckboxItem.#ctor(System.String,System.String,System.String,System.Boolean,System.Boolean,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            Creates a new checkbox item wth custom colors and custom sprites.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+            <param name="_isChecked">Sets if the checkbox should be checked from the beginning.</param>
+            <param name="_defaultItemBackColor">The backcolor of the non-selected item. (Default ARGB: A:170, R:10, G:10, B:10)</param>
+            <param name="_defaultItemTextColor">The textcolor of the non-selected item. (Default ARGB: A:255, R:255, G:255, B:255)</param>
+            <param name="_selectedItemBackColor">The backcolor of the selected item. (Default ARGB: A:255, R:245, G:245, B:245)</param>
+            <param name="_selectedItemTextColor">The textcolor of the selected item. (Default ARGB: A:255, R:5, G:5, B:5)</param>
+            <param name="_disabledItemTextColor">The textcolor of the disabled item. (Default ARGB: A:255, R:150, G:150, B:150)</param>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuCheckboxItem.IsChecked">
+            <summary>
+            Gets or sets if the item is checked.
+            </summary>
+        </member>
+        <member name="E:NativeUI.UI.UIMenuCheckboxItem.OnCheckedChanged">
+            <summary>
+            Raises when the check state changes. It doesn't raise when the item is not enabled.
+            </summary>
+        </member>
+        <member name="T:NativeUI.UI.UIMenuListItem">
+            <summary>
+            Item with text and a listbox with items in it.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.#ctor(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Creates a new list item with the default colors.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.#ctor(System.String,System.String,System.String,System.Boolean,System.Collections.Generic.List{System.String})">
+            <summary>
+            Creates a new list item with the default colors and a custom list of items.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+            <param name="items">Your custom list of items.</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.#ctor(System.String,System.String,System.String,System.Boolean,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            Creates a new list item with the custom colors.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+            <param name="_defaultItemBackColor">The backcolor of the non-selected item. (Default ARGB: A:170, R:10, G:10, B:10)</param>
+            <param name="_defaultItemTextColor">The textcolor of the non-selected item. (Default ARGB: A:255, R:255, G:255, B:255)</param>
+            <param name="_selectedItemBackColor">The backcolor of the selected item. (Default ARGB: A:255, R:245, G:245, B:245)</param>
+            <param name="_selectedItemTextColor">The textcolor of the selected item. (Default ARGB: A:255, R:5, G:5, B:5)</param>
+            <param name="_disabledItemTextColor">The textcolor of the disabled item. (Default ARGB: A:255, R:150, G:150, B:150)</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.#ctor(System.String,System.String,System.String,System.Boolean,System.Collections.Generic.List{System.String},System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            Creates a new list item with the custom colors and a custom list of items.
+            </summary>
+            <param name="name">The name of this item.</param>
+            <param name="text">The text of this item.</param>
+            <param name="description">The description of this item.</param>
+            <param name="enabled">Sets if the item should be enabled from the beginning, or not.</param>
+            <param name="items">Your custom list of items.</param>
+            <param name="_defaultItemBackColor">The backcolor of the non-selected item. (Default ARGB: A:170, R:10, G:10, B:10)</param>
+            <param name="_defaultItemTextColor">The textcolor of the non-selected item. (Default ARGB: A:255, R:255, G:255, B:255)</param>
+            <param name="_selectedItemBackColor">The backcolor of the selected item. (Default ARGB: A:255, R:245, G:245, B:245)</param>
+            <param name="_selectedItemTextColor">The textcolor of the selected item. (Default ARGB: A:255, R:5, G:5, B:5)</param>
+            <param name="_disabledItemTextColor">The textcolor of the disabled item. (Default ARGB: A:255, R:150, G:150, B:150)</param>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuListItem.SelectedIndex">
+            <summary>
+            Gets or sets the selected index of the list.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuListItem.SelectedText">
+            <summary>
+            Gets the selected text from the current index.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuListItem.ItemAmount">
+            <summary>
+            Gets the amount of items in the list.
+            </summary>
+        </member>
+        <member name="P:NativeUI.UI.UIMenuListItem.MaximumListBoxWidth">
+            <summary>
+            Gets or sets the maximum width of the listbox. (Default value: 200)
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.AddItem(System.String)">
+            <summary>
+            Adds an items to the list of items.
+            </summary>
+            <param name="item">The item that should be added to the list of items.</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.AddItems(System.String[])">
+            <summary>
+            Adds an array of items to the list of items..
+            </summary>
+            <param name="items">The array of items that should be added to the list of items.</param>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.RemoveItem(System.String)">
+            <summary>
+            This removes the specific item from the list of items through it's name.
+            </summary>
+            <param name="item">The item that should be removed</param>
+            <returns>Returns true if the item was deleted, otherwise false.</returns>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.RemoveItem(System.Int32)">
+            <summary>
+            This removes the specific item from the list of items through it's index.
+            </summary>
+            <param name="index">The index where the item is at</param>
+            <returns>Returns true if the item was deleted, otherwise false.</returns>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.RemoveAllItems">
+            <summary>
+            This removes all items from the list of items.
+            </summary>
+        </member>
+        <member name="E:NativeUI.UI.UIMenuListItem.OnClick">
+            <summary>
+            Raises when the user clicks on this item. It doesn't raise when the item is not enabled.
+            </summary>
+        </member>
+        <member name="E:NativeUI.UI.UIMenuListItem.OnSelectedIndexChanged">
+            <summary>
+            Raises when the selected index of the list changes.
+            </summary>
+        </member>
+        <member name="E:NativeUI.UI.UIMenuListItem.OnSelectedTextChanged">
+            <summary>
+            Raises when the selected text of this list changes.
+            </summary>
+        </member>
+        <member name="M:NativeUI.UI.UIMenuListItem.PerformClick">
+            <summary>
+            Generates a OnClick event.
+            </summary>
+        </member>
+    </members>
+</doc>
